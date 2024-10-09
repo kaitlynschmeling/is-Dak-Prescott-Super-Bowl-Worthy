@@ -1,0 +1,39 @@
+qbs <- read_csv("2022 NFL Passing.csv") %>% 
+  filter(Pos == "QB" & G > 10) %>% 
+  mutate(Player=gsub("*","",Player, fixed=TRUE)) %>%
+  mutate(Player=gsub("+","",Player, fixed=TRUE)) %>% 
+  mutate(
+    fill_color = case_when(
+      Player == "Patrick Mahomes" ~ "1",
+      Player == "Jalen Hurts" ~ "1",
+      Player == "Joe Burrow" ~ "1",
+      Player == "Jimmy Garoppolo" ~ "1",
+      Player == "Dak Prescott" ~ "2",
+      TRUE ~ "3"
+    )
+  )
+
+winners <- c("Patrick Mahomes", "Jalen Hurts", "Joe Burrow", "Jimmy Garoppolo", "Dak Prescott")
+  
+winningqbs <- qbs %>% filter(Player %in% winners) 
+
+ggplot() +
+  geom_bar(data=qbs, aes(x=reorder(Player, QBR), weight=QBR, fill=fill_color)) + 
+  scale_fill_manual(values=c("light blue", "blue", "light grey")) + 
+  coord_flip() +
+labs(
+title= "Is Dak Prescott a top 5 ranked quarterback?",
+subtitle = "Among the quaterbacks in the NFL, Dak is quite low. He doesn't come close to the top 5 ranked.",
+caption = "Source: Football Reference | By Kaitlyn Schmeling",
+x = "Player",
+y = "QBR"
+) +
+theme_minimal() + 
+  theme(
+    legend.position = "none"
+  )  +
+  theme(
+    plot.subtitle = element_textbox_simple(),
+    plot.title.position = "plot",
+    plot.title = element_text(size = 16, face = "bold")
+  ) 
