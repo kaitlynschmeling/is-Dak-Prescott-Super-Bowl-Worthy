@@ -1,0 +1,21 @@
+ggplot() + 
+  geom_point(data=qbs, aes(x=Yds...12, y=Cmp), color= "light grey") +
+  geom_point(data=winningqbs, aes(x=Yds...12, y=Cmp), color= "blue" ) +
+  geom_vline(xintercept = 3427.679, color= "dark grey") +
+  geom_hline(yintercept = 312, color="dark grey") +
+  geom_text_repel(data=winningqbs, aes(x= Yds...12, y=Cmp, label= Player)) +
+  geom_text(aes(x=2500, y=500, label= "Completions and Yards"), size=4, color= "red") +
+  geom_text(aes(x=2500, y=500, label= "Completions and Yards"), size=4, color= "red") +
+  labs(
+title= "Did Dak Prescott have enough completions?",
+subtitle = "Prescott was not among the top 5 quaterbacks in completions. Dak was very low on the list of quaterbacks in the NFL when it comes to points scored and allowed.",
+caption = "Source: Football Reference | By Kaitlyn Schmeling",
+x = "Points Scored",
+y = "Points Allowed"
+) +
+  theme_minimal() +
+  theme(
+    plot.subtitle = element_textbox_simple(),
+    plot.title.position = "plot",
+    plot.title = element_text(size = 16, face = "bold")
+  ) 
